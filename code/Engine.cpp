@@ -1,11 +1,17 @@
 #include "Engine.h"
 #include <iostream>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
 using namespace std;
+using namespace sf;
 
     Engine::Engine() 
     {
-        m_Window.create(VideoMode::getDesktopMode());
+        VideoMode desktopMode = VideoMode::getDesktopMode();
+        m_Window.create(desktopMode, "Particles");
     }
 
     void Engine::run() 
@@ -30,15 +36,16 @@ using namespace std;
 
     void Engine::input() 
     {
-        while (window.pollEvent(event))
+        Event event;
+        while (m_Window.pollEvent(event))
         {
             if (event.type == Event::Closed)
             {
-                window.close();
+                m_Window.close();
             }
             if (Keyboard::isKeyPressed(Keyboard::Escape))
             {
-                window.close();
+                m_Window.close();
             }
             if (event.mouseButton.button == Mouse::Left)
             {
@@ -69,11 +76,10 @@ using namespace std;
         m_Window.clear();
 
         for (auto iterator = m_particles.begin(); iterator != m_particles.end(); ++iterator) {
-            m_Window.draw(*iterator); 
+            m_Window.draw(*iterator);   
         }
-
-        
-        m_Window.display();
+       
+          m_Window.display();
     }
 
-}
+
