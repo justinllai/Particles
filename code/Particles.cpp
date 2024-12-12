@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+
 using namespace sf;
 
     Particle::Particle(RenderTarget& target, int numPoints, Vector2i mouseClickPosition) : m_A(2, numPoints)
@@ -9,7 +10,7 @@ using namespace sf;
         m_ttl = TTL;
         m_numPoints = numPoints;
         m_radiansPerSec = ((float)rand() / (RAND_MAX)) * M_PI;
-         m_cartesianPlane.setCenter(0, 0);
+        m_cartesianPlane.setCenter(0, 0);
         m_cartesianPlane.setSize(target.getSize().x, (-1.0) * target.getSize().y);
         m_centerCoordinate = target.mapPixelToCoords(mouseClickPosition, m_cartesianPlane);
 
@@ -45,10 +46,10 @@ using namespace sf;
     void Particle::draw(RenderTarget& target, RenderStates states) const 
     {
         VertexArray lines(TriangleFan, m_numPoints + 1);
-        Vector2f centerP = Vector2f(target.mapCoordsToPixel(m_centerCoordinate, m_cartesianPlane));
-        lines[0].position = centerP;
+        Vector2f center = Vector2f(target.mapCoordsToPixel(m_centerCoordinate, m_cartesianPlane));
+        lines[0].position = center;
         lines[0].color = m_color1;
-        for (int j = 1; j < m_numPoints; j++)
+        for (int j = 1; j <= m_numPoints; j++)
         {
             Vector2f v(m_A(0, j - 1), m_A(1, j - 1));
             lines[j].position = Vector2f(target.mapCoordsToPixel(v, m_cartesianPlane));
